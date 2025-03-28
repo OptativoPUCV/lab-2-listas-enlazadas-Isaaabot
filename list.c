@@ -34,12 +34,12 @@ Node * createNode(void * data) {
 */
 List * createList() 
 {
-    List *lista = (List*) malloc(sizeof(List)) ;
-    lista->head = NULL ;
-    lista->tail = NULL ;
-    lista->current = NULL ;
+    List *lista = (List*) malloc(sizeof(List)) ;            // Creo "lista" y asigno memoria con malloc
+    lista->head = NULL ;                                    // Inicializo head en NULL
+    lista->tail = NULL ;                                    // Inicializo tail en NULL
+    lista->current = NULL ;                                 // Inicializo current en NULL
 
-    return lista ;
+    return lista ;                                          // Retorno la lista
 }
 
 /*
@@ -49,23 +49,23 @@ List * createList()
 */
 void * firstList(List * list) 
 {
-    list->current = list->head ;
+    list->current = list->head ;                            // A current le asigno head (primera posición en la lista)
 
-    if (list->current != NULL)
-        return list->current->data ;
+    if (list->current != NULL)                              // Pregunto si current no es NULL
+        return list->current->data ;                        // Si no lo es, retorna la data
 
-    return NULL ;
+    return NULL ;                                           // Si lo es, retorna NULL
 }
 
 void * nextList(List * list) 
 {
-    if (list->current != NULL)
-        list->current = list->current->next ;
+    if (list->current != NULL)                              // Pregunto si current no es NULL
+        list->current = list->current->next ;               // Si no lo es, a current le asigno next (siguiente posición en la lista)
     
-    if (list->current != NULL)
-        return list->current->data ;
+    if (list->current != NULL)                              // Vuelvo a preguntar si current no es NULL
+        return list->current->data ;                        // Si no lo es, retorna la data
 
-    return NULL ;
+    return NULL ;                                           // Si lo es, retorna NULL
 }
 
 /*
@@ -75,23 +75,23 @@ void * nextList(List * list)
 */
 void * lastList(List * list) 
 {
-    list->current = list->tail ;
+    list->current = list->tail ;                            // A current le asigno tail (última posición en la lista)
 
-    if (list->current != NULL)
-        return list->current->data ;
+    if (list->current != NULL)                              // Pregunto si current no es NULL
+        return list->current->data ;                        // Si no lo es, retorna la data
 
-    return NULL ;
+    return NULL ;                                           // Si lo es, retorna NULL
 }
 
 void * prevList(List * list) 
 {
-    if (list->current != NULL)
-        list->current = list->current->prev ;
+    if (list->current != NULL)                              // Pregunto si current no es NULL
+        list->current = list->current->prev ;               // Si no lo es, a current le asigno prev (posicion anterior a current en la lista)
     
-    if (list->current != NULL)
-        return list->current->data ;
+    if (list->current != NULL)                              // Vuelvo a preguntar si current no es NULL
+        return list->current->data ;                        // Si no lo es, retorna la data
 
-    return NULL ;
+    return NULL ;                                           // Si lo es, retorna NULL
 }
 
 /*
@@ -100,7 +100,14 @@ void * prevList(List * list)
 */
 void pushFront(List * list, void * data) 
 {
+    Node *nuevo_nodo = createNode(data) ;
+    nuevo_nodo->next = list->head ;
     
+
+    if (list->head != NULL)
+        list->head->prev = nuevo_nodo ;
+        
+    list->head = nuevo_nodo ;
 }
 
 void pushBack(List * list, void * data) {
@@ -113,7 +120,8 @@ void pushBack(List * list, void * data) {
 */
 void pushCurrent(List * list, void * data) 
 {
-
+    Node *nuevo_nodo = createNode(data) ;
+    nuevo_nodo->next->prev = nuevo_nodo ;
 }
 
 void * popFront(List * list) {
