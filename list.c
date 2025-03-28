@@ -150,7 +150,19 @@ enlazada, y además retorna el **dato** del nodo eliminado.
 */
 void * popCurrent(List * list) 
 {
+    list->current = list->head ;
+    list->current->prev = NULL ;
 
+    if (list->current != NULL)
+    {
+        if (list->current->prev == NULL)
+            list->head = list->current->next ;
+        else
+            list->current->prev->next = list->current->next ;
+
+        free(list->current) ;
+        return ;
+    }
     
     return NULL ;
 }
