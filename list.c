@@ -150,6 +150,7 @@ enlazada, y además retorna el **dato** del nodo eliminado.
 */
 void * popCurrent(List * list) 
 {
+    /* arreglar - head->prev deberia ser NULL
     list->current = list->head ;
     list->current->prev = NULL ;
 
@@ -165,6 +166,7 @@ void * popCurrent(List * list)
     }
 
     return NULL ;
+    */
 }
 
 void cleanList(List * list) {
