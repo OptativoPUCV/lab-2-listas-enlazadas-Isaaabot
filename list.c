@@ -100,15 +100,15 @@ void * prevList(List * list)
 */
 void pushFront(List * list, void * data) 
 {
-    Node *nuevo_nodo = createNode(data) ;
-    nuevo_nodo->next = list->head ;
+    Node *nuevo_nodo = createNode(data) ;                   // Creo "nuevo_nodo" con función "createNode"
+    nuevo_nodo->next = list->head ;                         // A nuevo_nodo->next le asigno list->head
     
-    if (list->head != NULL)
-        list->head->prev = nuevo_nodo ;
-    else
-        list->tail = nuevo_nodo ;
+    if (list->head != NULL)                                 // Si list->head no es NULL
+        list->head->prev = nuevo_nodo ;                     // Le asigno nuevo_nodo a list->head->prev
+    else                                                    
+        list->tail = nuevo_nodo ;                           // Sino, le asigno nuevo_nodo a list->tail (última posicion de la lista)
 
-    list->head = nuevo_nodo ;
+    list->head = nuevo_nodo ;                               // A list->head le asignamos nuevo_nodo
 }
 
 void pushBack(List * list, void * data) {
@@ -121,16 +121,16 @@ void pushBack(List * list, void * data) {
 */
 void pushCurrent(List * list, void * data) 
 {
-    Node *nuevo_nodo = createNode(data) ;
-    nuevo_nodo->next = list->current->next ;
+    Node *nuevo_nodo = createNode(data) ;                   // Creo "nuevo_nodo" con función "createNode"
+    nuevo_nodo->next = list->current->next ;                // A nuevo_nodo->next le asigno list->current->next
 
-    if (list->current->next != NULL)
-        list->current->next->prev = nuevo_nodo ;
+    if (list->current->next != NULL)                        // Si list->current->next no es NULL
+        list->current->next->prev = nuevo_nodo ;            // Le asigno nuevo_nodo a list->current->next->prev
     else
-        list->tail = nuevo_nodo ;
+        list->tail = nuevo_nodo ;                           // Sino, le asigno nuevo_nodo a list->tail (última posicion de la lista)
 
-    nuevo_nodo->prev = list->current ;
-    list->current->next = nuevo_nodo ;
+    nuevo_nodo->prev = list->current ;                      // A nuevo_nodo->prev le asignamos list->current
+    list->current->next = nuevo_nodo ;                      // A list->current->next le asignamos nuevo_nodo
 }
 
 void * popFront(List * list) {
@@ -151,26 +151,26 @@ enlazada, y además retorna el **dato** del nodo eliminado.
 
 void * popCurrent(List * list) 
 {
-    if (list == NULL || list->current == NULL)
-        return NULL ;
+    if (list == NULL || list->current == NULL)              // Si list o list->current es NULL
+        return NULL ;                                       // Retorna NULL
     
-    Node *aux = list->current ;
-    void *data = aux->data ;
+    Node *aux = list->current ;                             // Creo un nodo "aux" y le asigno list->current
+    void *data = aux->data ;                                // Creo puntero data y le asigno aux->data
 
-    if (aux->prev != NULL)
-        aux->prev->next = aux->next ;
+    if (aux->prev != NULL)                                  // Si aux->prev no es NULL
+        aux->prev->next = aux->next ;                       // A aux->prev->next le asigno aux->next
     else
-        list->head = aux->next ;
+        list->head = aux->next ;                            // Sino, a list->head le asigno aux->next
     
-    if (aux->next != NULL)
-        aux->next->prev = aux->prev ;
+    if (aux->next != NULL)                                  // Vuelvo a preguntar si aux->prev no es NULL
+        aux->next->prev = aux->prev ;                       // Si no lo es, a aux->next->prev le asigno aux->prev
     else
-        list->tail = aux->prev ;
+        list->tail = aux->prev ;                            // Sino, ahora a list->tail le asigno aux->prev
 
-    list->current = aux->next ;
+    list->current = aux->next ;                             // A list->current le asigno aux->next
 
-    free(aux) ;
-    return data ;
+    free(aux) ;                                             // Libero la memoria de aux
+    return data ;                                           // Retorno la data
 }
 
 void cleanList(List * list) {
@@ -178,3 +178,9 @@ void cleanList(List * list) {
         popFront(list);
     }
 }
+
+/*          ------ EXPLICACIÓN SENCILLA PARA ENTENDIMIENTO DEL CÓDIGO ------
+Entiendase que head corresponde al primer dato, current corresponde al dato en el que estoy y tail corresponde al último dato
+Tambien data correspondería al valor que tengo en la posición, next sería el siguiente dato y prev el dato anterior
+Entonces si dice, por ejemplo, aux->next->prev se refiere al puntero prev del nodo siguiente (next) de aux :)
+*/
